@@ -420,6 +420,7 @@ input,textarea{font-family:var(--D)}
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
 @media(max-width:768px){
+  .hero-promise{display:none}
   .nav-links .nav-tab:not(.nav-tab-explore):not(.nav-tab-saved):not(.nav-tab-plan){display:none}
   .loc-grid{padding:0 16px 60px}
   .explore-header{padding:24px 16px 0}
@@ -428,6 +429,11 @@ input,textarea{font-family:var(--D)}
   .feats{padding:60px 20px}
   .hero-stats{gap:24px}
   .planner-summary{grid-template-columns:repeat(3,1fr)}
+  .search-row{flex-direction:column;gap:8px}
+  .search-row .search-go,.search-row .search-gps{width:100%}
+  .search-row > div{width:100%}
+  .search-go{padding:13px;font-size:14px;border-radius:12px}
+  .search-gps{padding:13px;border-radius:12px}
   .detail-info-grid{grid-template-columns:1fr}
   .saved-grid{grid-template-columns:1fr}
 }
@@ -775,8 +781,10 @@ nav.scrolled {
 .scroll-hint {
   position: absolute;
   bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -1798,6 +1806,145 @@ footer {
   letter-spacing: 0.08em; text-transform: uppercase;
 }
 .season-strip-text { font-size: 13px; color: var(--muted); }
+
+/* ── CONVERSATIONAL SEARCH ──────────────────────────────────────── */
+.convo-search-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+.convo-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--b2);
+  border-radius: 16px;
+  padding: 10px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.convo-search-box:focus-within {
+  border-color: rgba(0,255,136,0.4);
+  box-shadow: 0 0 0 3px rgba(0,255,136,0.07);
+}
+.convo-search-ic { font-size: 16px; opacity: 0.5; flex-shrink: 0; }
+.convo-search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--D);
+  font-size: 15px;
+  color: var(--cream);
+  min-width: 0;
+}
+.convo-search-input::placeholder { color: var(--muted); }
+.convo-gps-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+  padding: 2px 4px;
+}
+.convo-gps-btn:hover { opacity: 1; }
+.convo-clear-btn {
+  background: var(--card2);
+  border: 1px solid var(--b1);
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.convo-clear-btn:hover { color: var(--cream); border-color: var(--b2); }
+
+/* Parsed intent tags */
+.convo-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  min-height: 0;
+}
+.convo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: var(--jadedim);
+  border: 1px solid rgba(0,255,136,0.25);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--jade);
+  animation: fadeUp 0.2s ease;
+}
+.convo-tag-city {
+  background: rgba(245,166,35,0.1);
+  border-color: rgba(245,166,35,0.25);
+  color: var(--amber);
+}
+.convo-result-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+@media(max-width:768px){
+  .convo-search-input { font-size: 14px; }
+}
+
+.hero-clear-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.hero-clear-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.hero-convo-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  min-height: 0;
+}
+.hero-convo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: rgba(0,255,136,0.15);
+  border: 1px solid rgba(0,255,136,0.3);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green);
+  animation: fadeUp 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+.hero-convo-tag-city {
+  background: rgba(245,166,35,0.15);
+  border-color: rgba(245,166,35,0.3);
+  color: var(--amber);
+}
+@media(max-width:768px){.cta-primary{display:none!important}}
 </style>
 </head>
 <body>
@@ -1863,15 +2010,17 @@ footer {
         <input
           class="hero-search-input"
           id="hero-search-input"
-          placeholder="Search waterfalls, parks, sacred spaces…"
+          placeholder='Try "hiking in Brampton" or "dog friendly waterfall"…'
           autocomplete="off"
-          oninput="heroSearchInput(this.value)"
+          oninput="heroConvoInput(this.value)"
           onkeydown="heroSearchKey(event)"
           onblur="setTimeout(hideHeroSugg,200)"
         />
+        <button class="hero-clear-btn" id="hero-clear" onclick="clearHeroSearch()" style="display:none">✕</button>
         <button class="hero-search-btn" onclick="heroGo()">Explore →</button>
       </div>
       <div class="hero-sugg" id="hero-sugg"></div>
+      <div id="hero-convo-tags" class="hero-convo-tags"></div>
     </div>
 
     <div class="hero-ctas">
@@ -1924,7 +2073,7 @@ footer {
     <div style="background:var(--card2);border:1px solid var(--bdr2);border-radius:20px;padding:24px;flex:1;min-width:200px;max-width:260px;text-align:left">
       <div style="font-size:24px;margin-bottom:12px">🗺</div>
       <div style="font-size:14px;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px">Filter by what matters</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.6">Dog-friendly? Easy hike? Free parking? Date spot? Filter 83 locations in seconds.</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Dog-friendly? Easy hike? Free parking? Date spot? Filter 156+ locations in seconds.</div>
     </div>
     <!-- Feature 2 -->
     <div style="background:var(--card2);border:1px solid rgba(0,255,136,0.15);border-radius:20px;padding:24px;flex:1;min-width:200px;max-width:260px;text-align:left">
@@ -2095,7 +2244,7 @@ footer {
 <div id="try-app" style="padding:100px 48px;text-align:center;border-top:1px solid var(--bdr);background:var(--card)">
   <div style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:16px">No download · No account · Just go</div>
   <h2 style="font-family:var(--disp);font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:16px">Start exploring now.</h2>
-  <p style="font-size:16px;color:var(--off);max-width:460px;margin:0 auto 52px;line-height:1.65">Browse all 83 locations, filter by what matters, save your favourites. Opens instantly.</p>
+  <p style="font-size:16px;color:var(--off);max-width:460px;margin:0 auto 52px;line-height:1.65">Browse all 156+ locations, filter by what matters, save your favourites. Opens instantly.</p>
 
   <!-- CSS Phone Mockup -->
   <div style="max-width:340px;margin:0 auto 44px;position:relative">
@@ -2382,10 +2531,11 @@ footer {
 <!-- Sticky mobile CTA -->
 <div id="sticky-bar" style="position:fixed;bottom:44px;left:16px;right:16px;z-index:95;background:var(--green);color:var(--black);border-radius:16px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 8px 32px rgba(0,255,136,0.3);transform:translateY(140px);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none">
   <div>
-    <div style="font-size:13px;font-weight:800;letter-spacing:-0.01em">83 Ontario spots — free</div>
+    <div style="font-size:13px;font-weight:800;letter-spacing:-0.01em">150+ Ontario spots — free</div>
     <div style="font-size:10px;font-weight:600;opacity:0.7">No account needed to browse</div>
   </div>
   <button onclick="enterApp('explore')" style="background:var(--black);color:var(--green);border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:800;font-family:var(--disp);cursor:pointer;white-space:nowrap">Explore →</button>
+  <button onclick="closeStickyBar()" style="background:rgba(0,0,0,0.2);color:var(--black);border:none;border-radius:10px;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:8px" title="Dismiss">✕</button>
 </div>
 </div><!-- /landing-section -->
 
@@ -2424,10 +2574,24 @@ footer {
 
   <div class="explore-header" style="padding-top:24px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:24px"><h1 class="explore-title" style="margin-bottom:0">Explore Ontario</h1><div id="result-count" style="font-size:13px;color:var(--muted);font-weight:600">All 156 locations</div></div>
-    <div class="search-row">
-      <div style="flex:1;position:relative"><input class="search-box" id="search-input" placeholder="Search locations, cities, tags…" oninput="onSearchInput(this.value)" onkeydown="handleSearchKey(event)" onfocus="onSearchFocus()" onblur="setTimeout(hideSuggestions,200)" autocomplete="off" style="width:100%"/><div id="search-sugg" class="sugg-box"></div></div>
-      <button class="search-go" onclick="geocodeSearch()">📍 Near Address</button>
-      <button class="search-gps" onclick="useGPS()" title="Use my location">🎯</button>
+    <div class="convo-search-wrap">
+      <div class="convo-search-box">
+        <span class="convo-search-ic">🔍</span>
+        <input
+          class="convo-search-input"
+          id="search-input"
+          placeholder="Try "hiking in Brampton" or "dog friendly waterfall"…"
+          oninput="onConvoSearch(this.value)"
+          onkeydown="handleSearchKey(event)"
+          onfocus="onSearchFocus()"
+          onblur="setTimeout(hideSuggestions,200)"
+          autocomplete="off"
+        />
+        <button class="convo-gps-btn" onclick="useGPS()" title="Near me">📍</button>
+        <button class="convo-clear-btn" id="convo-clear" onclick="clearConvoSearch()" style="display:none">✕</button>
+      </div>
+      <div id="search-sugg" class="sugg-box"></div>
+      <div id="convo-tags" class="convo-tags"></div>
     </div>
     <div class="dist-banner" id="dist-banner">
       <div>
@@ -5831,7 +5995,12 @@ function filterMatch(l,f){
   return true;
 }
 function getFiltered(){
-  const q=(document.getElementById('search-input')||{}).value?.toLowerCase()||'';
+  const rawQ=(document.getElementById('search-input')||{}).value?.trim()||'';
+  // In conversational mode, if we parsed intents, don't use raw text as a filter
+  // Only use text filter if there are no parsed intents (pure text search)
+  const hasConvoIntent = typeof convoState !== 'undefined' && 
+    (convoState.filters.length > 0 || convoState.city);
+  const q = hasConvoIntent ? '' : rawQ.toLowerCase();
   let locs=pub.filter(l=>{
     if(q && !l.name.toLowerCase().includes(q) && !(l.city||'').toLowerCase().includes(q) && !tagStr(l).toLowerCase().includes(q)) return false;
     for(const f of activeFilters){ if(!filterMatch(l,f)) return false; }
@@ -6495,41 +6664,103 @@ function pickCity(c){ hidePlannerSugg(); var i=document.getElementById('planner-
 // ── HERO SEARCH ────────────────────────────────────────────────────────────
 let _hsfx = -1;
 
-function heroSearchInput(q) {
+function heroConvoInput(q) {
+  const clearBtn = document.getElementById('hero-clear');
+  if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+
+  // Show location suggestions
   const box = document.getElementById('hero-sugg');
-  if (!box) return;
-  if (!q || q.length < 2) { box.classList.remove('open'); return; }
+  if (!q || q.length < 2) { if(box) box.classList.remove('open'); clearHeroTags(); return; }
+
+  // Always reset box to force re-render
+  if (box) { box.classList.remove('open'); box.innerHTML = ''; }
+
+  // Parse conversational intent and show tags
+  const state = typeof parseConvoInput !== 'undefined' ? parseConvoInput(q) : { filters:[], city:null };
+  renderHeroTags(state);
+
+  // Show location suggestions for short/specific queries
   const ql = q.toLowerCase();
   const results = (typeof pub !== 'undefined' ? pub : [])
     .filter(l => l.name.toLowerCase().includes(ql) || (l.city||'').toLowerCase().includes(ql) || JSON.stringify(l.tags||'').toLowerCase().includes(ql))
-    .slice(0, 7);
-  if (!results.length) { box.classList.remove('open'); return; }
-  _hsfx = -1;
-  box.innerHTML = results.map(l => {
-    const p = typeof getPalette !== 'undefined' ? getPalette(l.id) : {g1:'#0a1a10',g2:'#1a3020',em:'📍'};
-    const tag = Array.isArray(l.tags) ? l.tags[0] : '';
-    const hl = (t) => {
-      const i = t.toLowerCase().indexOf(ql);
-      if (i < 0) return t;
-      return t.slice(0,i) + '<mark>' + t.slice(i,i+q.length) + '</mark>' + t.slice(i+q.length);
-    };
-    return `<div class="hsi" onmousedown="heroPickLoc('${l.id}')">
-      <div class="hsi-em" style="background:linear-gradient(135deg,${p.g1},${p.g2})">${p.em}</div>
-      <div style="flex:1;min-width:0">
-        <div class="hsi-name">${hl(l.name)}</div>
-        <div class="hsi-city">${l.city}${l.province?', '+l.province:''}</div>
-      </div>
-      ${tag ? `<div class="hsi-tag">${tag}</div>` : ''}
-    </div>`;
-  }).join('');
-  box.classList.add('open');
+    .slice(0, 6);
+
+  // If intent detected, filter locations directly using inline logic
+  let displayResults;
+  if ((state.filters.length > 0 || state.city) && typeof pub !== 'undefined') {
+    const cityLower = state.city ? state.city.toLowerCase() : null;
+    const tagStr = l => JSON.stringify(l.tags||'').toLowerCase();
+    displayResults = pub.filter(l => {
+      // Filter by city if detected
+      if (cityLower && !(l.city||'').toLowerCase().includes(cityLower)) return false;
+      for (const f of state.filters) {
+        if (!f.filter) continue;
+        if (f.filter === 'Waterfalls' && !tagStr(l).includes('waterfall')) return false;
+        if (f.filter === 'Dog-Friendly' && !l.dog) return false;
+        if (f.filter === 'Family' && !l.family) return false;
+        if (f.filter === 'Date Night' && !l.date) return false;
+        if (f.filter === 'Hidden Gem' && !l.hidden_gem) return false;
+        if (f.filter === 'No Hiking' && !tagStr(l).includes('no hiking')) return false;
+        if (f.filter === 'Conservation Areas' && !tagStr(l).includes('conservation area')) return false;
+        if (f.filter === 'Parks & Gardens' && !tagStr(l).includes('park & garden')) return false;
+        if (f.filter === 'Sacred Spaces' && !tagStr(l).includes('religious')) return false;
+        if (f.filter === 'YouTube 10' && !l.yt10) return false;
+        if (f.filter === 'Easy' && l.difficulty !== 'Easy' && l.difficulty !== 'Very Easy') return false;
+      }
+      return true;
+    }).slice(0, 7);
+  } else {
+    displayResults = results;
+  }
+
+  if (!displayResults.length) { if(box) box.classList.remove('open'); }
+  else {
+    _hsfx = -1;
+    box.innerHTML = displayResults.map(l => {
+      const p = typeof getPalette !== 'undefined' ? getPalette(l.id) : {g1:'#0a1a10',g2:'#1a3020',em:'📍'};
+      const tag = Array.isArray(l.tags) ? l.tags[0] : '';
+      const i = l.name.toLowerCase().indexOf(ql);
+      const hl = i >= 0 ? l.name.slice(0,i)+'<mark>'+l.name.slice(i,i+q.length)+'</mark>'+l.name.slice(i+q.length) : l.name;
+      return `<div class="hsi" onmousedown="heroPickLoc('${l.id}')">
+        <div class="hsi-em" style="background:linear-gradient(135deg,${p.g1},${p.g2})">${p.em}</div>
+        <div style="flex:1;min-width:0">
+          <div class="hsi-name">${hl}</div>
+          <div class="hsi-city">${l.city}${l.province?', '+l.province:''}</div>
+        </div>
+        ${tag ? `<div class="hsi-tag">${tag}</div>` : ''}
+      </div>`;
+    }).join('');
+    box.classList.add('open');
+  }
+}
+
+function renderHeroTags(state) {
+  const el = document.getElementById('hero-convo-tags');
+  if (!el) return;
+  const tags = [];
+  if (state.city) tags.push(`<span class="hero-convo-tag hero-convo-tag-city">📍 Near ${state.city}</span>`);
+  state.filters.forEach(f => tags.push(`<span class="hero-convo-tag">${f.tag}</span>`));
+  el.innerHTML = tags.join('');
+}
+
+function clearHeroTags() {
+  const el = document.getElementById('hero-convo-tags');
+  if (el) el.innerHTML = '';
+}
+
+function clearHeroSearch() {
+  const inp = document.getElementById('hero-search-input');
+  if (inp) inp.value = '';
+  document.getElementById('hero-clear').style.display = 'none';
+  clearHeroTags();
+  hideHeroSugg();
 }
 
 function heroPickLoc(id) {
   document.getElementById('hero-sugg').classList.remove('open');
   document.getElementById('hero-search-input').value = '';
+  clearHeroTags();
   enterApp('explore');
-  // Small delay to let app render before opening detail
   setTimeout(() => openDetail(id), 120);
 }
 
@@ -6539,8 +6770,8 @@ function heroGo() {
   if (q) {
     setTimeout(() => {
       const inp = document.getElementById('search-input');
-      if (inp) { inp.value = q; onSearchInput(q); }
-    }, 120);
+      if (inp) { inp.value = q; onConvoSearch(q); }
+    }, 150);
   }
 }
 
@@ -6862,6 +7093,159 @@ showPage = function(name) {
   }
 };
 
+
+// ── CONVERSATIONAL SEARCH ────────────────────────────────────────────────────
+
+// Intent keywords → filter mappings
+const INTENT_MAP = [
+  // Activities
+  { words: ['hik','trail','walk','trek'],        filter: null, tag: '🥾 Hiking' },
+  { words: ['waterfall','falls','cascade'],       filter: 'Waterfalls', tag: '💧 Waterfalls' },
+  { words: ['dog','dogs','pet','pup'],            filter: 'Dog-Friendly', tag: '🐕 Dog-Friendly' },
+  { words: ['family','kid','children','toddler'], filter: 'Family', tag: '👨‍👩‍👧 Family' },
+  { words: ['date','romantic','couple'],          filter: 'Date Night', tag: '💑 Date Night' },
+  { words: ['photo','photograph','film','shoot','content','creator','instagram','youtube'],
+                                                  filter: null, tag: '📸 Photography' },
+  { words: ['easy','accessible','no hike','drive up','no hiking'],
+                                                  filter: 'No Hiking', tag: '🚗 No Hiking' },
+  { words: ['conservation','nature','forest','trail'],
+                                                  filter: 'Conservation Areas', tag: '🌲 Conservation' },
+  { words: ['park','garden'],                     filter: 'Parks & Gardens', tag: '🌿 Parks' },
+  { words: ['sacred','temple','gurdwara','mosque','church','spiritual'],
+                                                  filter: 'Sacred Spaces', tag: '🛕 Sacred Spaces' },
+  { words: ['hidden','secret','gem','underrated'], filter: 'Hidden Gem', tag: '💎 Hidden Gem' },
+  { words: ['youtube','yt10','video'],            filter: 'YouTube 10', tag: '📹 YouTube 10' },
+];
+
+// Ontario cities/areas for proximity sorting
+const CITY_HINTS = [
+  'brampton','toronto','mississauga','hamilton','oakville','burlington',
+  'milton','caledon','vaughan','markham','pickering','ajax','oshawa',
+  'barrie','collingwood','niagara','kingston','ottawa','guelph','kitchener',
+  'waterloo','cambridge','brantford','st catharines','london','windsor',
+  'north york','scarborough','etobicoke','thornhill','richmond hill'
+];
+
+let convoState = { filters: [], city: null, text: '' };
+
+function parseConvoInput(q) {
+  const ql = q.toLowerCase().trim();
+  const state = { filters: [], city: null, text: q };
+
+  // Detect city mentions
+  for (const city of CITY_HINTS) {
+    if (ql.includes(city)) {
+      state.city = city.charAt(0).toUpperCase() + city.slice(1);
+      break;
+    }
+  }
+
+  // Detect intent filters
+  for (const intent of INTENT_MAP) {
+    if (intent.words.some(w => ql.includes(w))) {
+      state.filters.push(intent);
+    }
+  }
+
+  return state;
+}
+
+function onConvoSearch(q) {
+  const clearBtn = document.getElementById('convo-clear');
+  if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+
+  convoState = parseConvoInput(q);
+
+  // Show parsed intent tags
+  renderConvoTags(convoState);
+
+  // Apply filters
+  applyConvoFilters(convoState);
+
+  // Show suggestions: if intent detected, show filtered locations; else text search
+  if (q.length >= 2) {
+    const hasIntent = convoState.filters.length > 0;
+    if (hasIntent) {
+      // Compute matches directly from parsed filters without waiting for async
+      const intentMatched = pub.filter(l => {
+        for (const f of convoState.filters) {
+          if (f.filter && !filterMatch(l, f.filter)) return false;
+        }
+        return true;
+      }).slice(0, 7);
+      _renderSugg(intentMatched, 'search-sugg', '', 'pickSearchSugg');
+    } else {
+      _renderSugg(_suggs(q), 'search-sugg', q, 'pickSearchSugg');
+    }
+  } else {
+    hideSuggestions();
+  }
+}
+
+function renderConvoTags(state) {
+  const el = document.getElementById('convo-tags');
+  if (!el) return;
+  const tags = [];
+
+  if (state.city) {
+    tags.push(`<span class="convo-tag convo-tag-city">📍 Near ${state.city}</span>`);
+  }
+  state.filters.forEach(f => {
+    tags.push(`<span class="convo-tag">${f.tag}</span>`);
+  });
+
+  el.innerHTML = tags.join('');
+}
+
+async function applyConvoFilters(state) {
+  // Apply filter chips
+  activeFilters.clear();
+  state.filters.forEach(f => { if (f.filter) activeFilters.add(f.filter); });
+  buildFilterBar();
+  renderGrid(); // Apply filters immediately
+
+  // Geocode city if mentioned
+  if (state.city && (!userCoords || userCoords._city !== state.city)) {
+    try {
+      const q = encodeURIComponent(state.city + ', Ontario, Canada');
+      const r = await fetch('https://nominatim.openstreetmap.org/search?q=' + q + '&format=json&limit=1',
+        { headers: { 'Accept': 'application/json', 'User-Agent': 'RoamioWebsite/1.0' } });
+      const d = await r.json();
+      if (d && d.length) {
+        userCoords = { lat: parseFloat(d[0].lat), lng: parseFloat(d[0].lon),
+                       label: state.city, _city: state.city };
+        const banner = document.getElementById('dist-banner');
+        const lbl = document.getElementById('dist-banner-label');
+        if (banner) banner.classList.add('show');
+        if (lbl) lbl.textContent = state.city + ', Ontario';
+      }
+    } catch(e) {}
+  } else if (!state.city) {
+    // Don't clear userCoords if they set it via GPS
+  }
+
+  renderGrid();
+}
+
+function clearConvoSearch() {
+  const inp = document.getElementById('search-input');
+  if (inp) inp.value = '';
+  document.getElementById('convo-clear').style.display = 'none';
+  document.getElementById('convo-tags').innerHTML = '';
+  activeFilters.clear();
+  buildFilterBar();
+  hideSuggestions();
+  renderGrid();
+}
+
+// Override the onSearchFocus for convo style
+function onSearchFocus() {
+  const q = document.getElementById('search-input').value;
+  if (q.length >= 2) onConvoSearch(q);
+}
+
+let stickyBarDismissed=false;
+function closeStickyBar(){stickyBarDismissed=true;const b=document.getElementById('sticky-bar');if(b){b.style.transform='translateY(140px)';b.style.pointerEvents='none';}}
 updateNavAuth();
 buildFilterBar();
 buildPreviewStrip();
